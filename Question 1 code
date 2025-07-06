@@ -1,0 +1,197 @@
+import React, { useState, useContext, createContext } from 'react';
+
+const initialProducts = [
+  { id: 1, name: 'Wireless Mouse', price: 25.99 },
+  { id: 2, name: 'Mechanical Keyboard', price: 89.99 },
+  { id: 3, name: '4K Webcam', price: 129.50 },
+  { id: 4, name: 'USB-C Hub', price: 45.00 },
+  { id: 5, name: 'Ergonomic Chair', price: 350.00 },
+  { id: 6, name: 'Standing Desk', price: 499.99 },
+];
+
+const ThemeContext = createContext(null);
+
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+  
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+const AuthContext = createContext(null);
+
+const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = () => setIsAuthenticated(true);
+  const logout = () => setIsAuthenticated(false);
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+const ProductCard = ({ product }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const { theme } = useContext(ThemeContext);
+
+  const handleLikeToggle = () => {
+    setIsLiked(prevIsLiked => !prevIsLiked);
+  };
+
+  const cardClasses = `
+    rounded-xl shadow-lg p-6 transition-all duration-300 
+    ${theme === 'light' ? 'bg-white text-gray-800' : 'bg-gray-800 text-gray-200'}
+  `;
+  const buttonClasses = `
+    mt-4 w-full py-2 px-4 rounded-lg font-semibold transition-colors duration-300
+    ${isLiked 
+      ? 'bg-red-500 text-white' 
+      : (theme === 'light' ? 'bg-gray-200 hover:bg-gray-300' : 'bg-gray-700 hover:bg-gray-600')}
+  `;
+
+  return (
+    <div className={cardClasses}>
+      <h3 className="text-xl font-bold">{product.name}</h3>
+      <p className={`mt-2 text-lg ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>
+        ${product.price.toFixed(2)}
+      </p>
+      <button onClick={handleLikeToggle} className={buttonClasses}>
+        {isLiked ? 'Liked ❤️' : 'Like �'}
+      </button>
+    </div>
+  );
+};
+
+const Header = ({ searchTerm, onSearchChange, onNavigate }) => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { isAuthenticated, login, logout } = useContext(AuthContext);
+
+  const headerClasses = `
+    p-4 shadow-md sticky top-0 z-10 transition-colors duration-300
+    ${theme === 'light' ? 'bg-white' : 'bg-gray-800 border-b border-gray-700'}
+  `;
+  const inputClasses = `
+    w-full md:w-1/3 p-2 rounded-lg transition-colors duration-300
+    ${theme === 'light' ? 'bg-gray-100 text-gray-900' : 'bg-gray-700 text-white'}
+  `;
+
+  return (
+    <header className={headerClasses}>
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className={`text-2xl font-bold ${theme === 'light' ? 'text-blue-600' : 'text-blue-400'}`}>
+          ReactShop
+        </h1>
+        <div className="flex items-center space-x-4">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={onSearchChange}
+            className={inputClasses}
+          />
+          <button onClick={() => onNavigate('home')} className="text-lg hover:underline">Home</button>
+          <button onClick={() => onNavigate('checkout')} className="text-lg hover:underline">Checkout</button>
+          <button onClick={toggleTheme} className="text-2xl">
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
+          <button onClick={isAuthenticated ? logout : login} className="bg-blue-500 text-white py-2 px-4 rounded-lg">
+            {isAuthenticated ? 'Logout' : 'Login'}
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+const CheckoutPage = () => {
+    const { theme } = useContext(ThemeContext);
+    return (
+        <div className="text-center p-10">
+            <h2 className="text-4xl font-bold mb-4">Checkout</h2>
+            <p className={`text-xl ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>
+                Welcome to the checkout page! Only logged-in users can see this.
+            </p>
+        </div>
+    );
+};
+
+const ProtectedContent = ({ children }) => {
+    const { isAuthenticated } = useContext(AuthContext);
+    const { theme } = useContext(ThemeContext);
+    
+    if (!isAuthenticated) {
+        return (
+            <div className={`text-center p-10 rounded-lg shadow-md mx-auto mt-10 max-w-md ${theme === 'light' ? 'bg-red-100 text-red-800' : 'bg-red-900 bg-opacity-50 text-red-200'}`}>
+                <h2 className="text-2xl font-bold">Access Denied</h2>
+                <p className="mt-2">You must be logged in to view the checkout page.</p>
+            </div>
+        );
+    }
+
+    return children;
+};
+
+const ECommerceLayout = () => {
+  const { theme } = useContext(ThemeContext);
+  
+  const [currentPage, setCurrentPage] = useState('home');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProducts = initialProducts.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const appClasses = `
+    min-h-screen font-sans transition-colors duration-300
+    ${theme === 'light' ? 'bg-gray-50 text-gray-900' : 'bg-gray-900 text-gray-100'}
+  `;
+
+  return (
+    <div className={appClasses}>
+      <Header 
+        searchTerm={searchTerm}
+        onSearchChange={handleSearchChange}
+        onNavigate={setCurrentPage}
+      />
+      <main className="container mx-auto p-4 md:p-8">
+        {currentPage === 'home' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+        {currentPage === 'checkout' && (
+          <ProtectedContent>
+            <CheckoutPage />
+          </ProtectedContent>
+        )}
+      </main>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <ThemeProvider>
+        <ECommerceLayout />
+      </ThemeProvider>
+    </AuthProvider>
+  );
+}
+�
