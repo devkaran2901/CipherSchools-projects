@@ -1,0 +1,8 @@
+// Arrow function to calculate the sum of two numbers
+const addNumbers = (a, b) => a + b;
+
+// Example of how to use the function
+let result = addNumbers(5, 10);
+
+// Display the result in the console
+console.log(result); // This will output 15
