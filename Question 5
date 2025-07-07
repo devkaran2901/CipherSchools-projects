@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Basic HTML Page</title>
+    <style>
+        /* This is an internal CSS stylesheet */
+        
+        /* Style for the whole page body */
+        body {
+            background-color: #f0f8ff; /* A light aliceblue background color */
+            font-family: sans-serif;
+        }
+        
+        /* Style for the main heading */
+        h1 {
+            color: #000080; /* A navy blue text color */
+        }
+
+        /* New card class */
+        .card {
+            background-color: white;
+            border: 1px solid #dddddd; /* Adds a light grey border */
+            padding: 20px;              /* Adds space inside the card */
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+            margin-top: 20px;           /* Adds space above the card */
+            margin-bottom: 20px;        /* Adds space below the card */
+        }
+
+        /* Styles for the custom alert */
+        .custom-alert-overlay {
+            position: fixed; /* Sit on top of the page content */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+            z-index: 10; /* Specify a stack order */
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-alert-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .custom-alert-box button {
+            background-color: #000080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to My Web Page</h1>
+    
+    <p>This is a simple paragraph demonstrating a basic HTML structure. You can replace this text with your own content. HTML is the standard markup language for creating web pages and web applications.</p>
+    
+    <img 
+        src="https://placehold.co/600x400/3498db/ffffff?text=My+Awesome+Image"
+        alt="A placeholder image"
+    >
+
+    <!-- New div with the .card class applied -->
+    <div class="card">
+        <h3>This is a Card</h3>
+        <p>This div has a border, padding, and a shadow applied using our new CSS class.</p>
+    </div>
+    
+    <hr>
+
+    <h2>Contact Us</h2>
+    
+    <form>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- Custom Alert Box HTML -->
+    <div id="customAlert" class="custom-alert-overlay">
+        <div class="custom-alert-box">
+            <h2>Hello!</h2>
+            <p>This is a custom greeting message.</p>
+            <button id="closeAlert">Close</button>
+        </div>
+    </div>
+
+    <!-- JavaScript to show the alert -->
+    <script>
+        // Wait for the page to fully load
+        window.onload = function() {
+            // Get the alert elements
+            const alertOverlay = document.getElementById('customAlert');
+            const closeButton = document.getElementById('closeAlert');
+
+            // Show the alert
+            if (alertOverlay) {
+                alertOverlay.style.display = 'flex';
+            }
+
+            // Add click event to the close button to hide the alert
+            if (closeButton) {
+                closeButton.onclick = function() {
+                    alertOverlay.style.display = 'none';
+                }
+            }
+        };
+    </script>
+        
+</body>
+</html>
