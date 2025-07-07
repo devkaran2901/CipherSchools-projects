@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Basic HTML Page</title>
+    <style>
+        /* This is an internal CSS stylesheet */
+        
+        /* Style for the whole page body */
+        body {
+            background-color: #f0f8ff; /* A light aliceblue background color */
+        }
+        
+        /* Style for the main heading */
+        h1 {
+            color: #000080; /* A navy blue text color */
+        }
+
+        /* New card class */
+        .card {
+            background-color: white;
+            border: 1px solid #dddddd; /* Adds a light grey border */
+            padding: 20px;              /* Adds space inside the card */
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+            margin-top: 20px;           /* Adds space above the card */
+            margin-bottom: 20px;        /* Adds space below the card */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to My Web Page</h1>
+    
+    <p>This is a simple paragraph demonstrating a basic HTML structure. You can replace this text with your own content. HTML is the standard markup language for creating web pages and web applications.</p>
+    
+    <img 
+        src="https://placehold.co/600x400/3498db/ffffff?text=My+Awesome+Image"
+        alt="A placeholder image"
+    >
+
+    <!-- New div with the .card class applied -->
+    <div class="card">
+        <h3>This is a Card</h3>
+        <p>This div has a border, padding, and a shadow applied using our new CSS class.</p>
+    </div>
+    
+    <hr>
+
+    <h2>Contact Us</h2>
+    
+    <form>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+        
+</body>
+</html>
