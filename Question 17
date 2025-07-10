@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured Web Page</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 960px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header, footer {
+            background-color: #000080;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px 0;
+        }
+        form {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        form input[type="text"],
+        form input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        form input[type="submit"] {
+            background-color: #000080;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        footer a {
+            color: #add8e6;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Structured Web Page</h1>
+    </header>
+
+    <div class="container">
+        <main>
+            <h2>Main Content Area</h2>
+            <p>This is the main section of the webpage. It contains the primary content that users will interact with.</p>
+            
+            <img src="https://placehold.co/800x400/000080/ffffff?text=HTML5+Structure" alt="Blue placeholder image showing the text HTML5 Structure">
+
+            <section>
+                <h3>Contact Form</h3>
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                    
+                    <input type="submit" value="Submit">
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>Copyright &copy; 2025 - <a href="https://takeuforward.org/" target="_blank">takeUforward</a></p>
+    </footer>
+
+</body>
+</html>
