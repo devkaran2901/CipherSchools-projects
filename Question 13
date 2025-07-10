@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Person Cards</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .person-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            transition: transform 0.2s;
+        }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .person-card h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .person-card p {
+            color: #666;
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 600px) {
+            .person-card {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Person List</h1>
+
+    <div id="card-container"></div>
+
+    <script>
+        class Person {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+
+            createCard() {
+                const card = document.createElement('div');
+                card.className = 'person-card';
+
+                const nameElement = document.createElement('h2');
+                nameElement.textContent = this.name;
+
+                const ageElement = document.createElement('p');
+                ageElement.textContent = `Age: ${this.age}`;
+
+                card.appendChild(nameElement);
+                card.appendChild(ageElement);
+
+                return card;
+            }
+        }
+
+        const person1 = new Person('Alice', 30);
+        const person2 = new Person('Bob', 25);
+
+        const container = document.getElementById('card-container');
+        container.appendChild(person1.createCard());
+        container.appendChild(person2.createCard());
+    </script>
+
+</body>
+</html>
