@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Person Cards</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #card-container {
+            display: flex;
+            flex-direction: column; /* Stack cards vertically on small screens */
+            align-items: center;
+            width: 100%;
+        }
+
+        .person-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 10px;
+            width: 90%; /* Start with a mobile-first width */
+            max-width: 320px; /* Set a max-width for consistency */
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .person-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #eee;
+        }
+
+        .person-card h2 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .person-card p {
+            color: #666;
+            margin: 0;
+        }
+        
+        #add-person-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        #add-person-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Important for padding and width */
+        }
+        
+        #add-person-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #000080;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+
+        /* --- Media Queries for Responsiveness --- */
+        
+        /* For tablets and larger screens */
+        @media (min-width: 768px) {
+            #card-container {
+                flex-direction: row; /* Arrange cards side-by-side */
+                flex-wrap: wrap; /* Allow cards to wrap to the next line */
+                justify-content: center;
+            }
+        }
+
+        /* For large desktops */
+        @media (min-width: 1200px) {
+            #card-container {
+                max-width: 1100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Person List</h1>
+
+    <!-- Form with ARIA labels for accessibility -->
+    <form id="add-person-form" aria-label="Add a new person to the list">
+        <h2>Add New Person</h2>
+        <label for="name-input" class="sr-only">Name</label>
+        <input type="text" id="name-input" placeholder="Name" aria-label="Name" required>
+        
+        <label for="age-input" class="sr-only">Age</label>
+        <input type="number" id="age-input" placeholder="Age" aria-label="Age" required>
+        
+        <button type="submit">Add Person</button>
+    </form>
+
+    <div id="card-container"></div>
+
+    <script>
+        class Person {
+            constructor(name, age, imageUrl) {
+                this.name = name;
+                this.age = age;
+                this.imageUrl = imageUrl;
+            }
+
+            createCard() {
+                const card = document.createElement('div');
+                card.className = 'person-card';
+
+                // Image with alt attribute for accessibility
+                const imgElement = document.createElement('img');
+                imgElement.src = this.imageUrl;
+                imgElement.alt = `Profile picture of ${this.name}`;
+                imgElement.onerror = "this.onerror=null;this.src='https://placehold.co/100x100/cccccc/ffffff?text=User';"
+
+
+                const nameElement = document.createElement('h2');
+                nameElement.textContent = this.name;
+
+                const ageElement = document.createElement('p');
+                ageElement.textContent = `Age: ${this.age}`;
+
+                card.appendChild(imgElement);
+                card.appendChild(nameElement);
+                card.appendChild(ageElement);
+
+                return card;
+            }
+        }
+
+        const container = document.getElementById('card-container');
+        
+        // Initial people
+        const initialPeople = [
+            new Person('Alice', 30, 'https://placehold.co/100x100/E8117F/ffffff?text=A'),
+            new Person('Bob', 25, 'https://placehold.co/100x100/3498db/ffffff?text=B')
+        ];
+
+        initialPeople.forEach(person => {
+            container.appendChild(person.createCard());
+        });
+
+        // Form submission handler
+        const form = document.getElementById('add-person-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const nameInput = document.getElementById('name-input');
+            const ageInput = document.getElementById('age-input');
+            
+            const name = nameInput.value;
+            const age = ageInput.value;
+            const initial = name.charAt(0).toUpperCase();
+            const imageUrl = `https://placehold.co/100x100/663399/ffffff?text=${initial}`;
+
+            if(name && age) {
+                const newPerson = new Person(name, age, imageUrl);
+                container.appendChild(newPerson.createCard());
+
+                // Clear the form fields
+                nameInput.value = '';
+                ageInput.value = '';
+            }
+        });
+    </script>
+
+</body>
+</html>
