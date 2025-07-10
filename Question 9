@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Basic HTML Page</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: sans-serif;
+        }
+        
+        h1 {
+            color: #000080;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #dddddd;
+            padding: 20px;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .custom-alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 10;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .custom-alert-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .custom-alert-box button {
+            background-color: #000080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to My Web Page</h1>
+    
+    <p>This is a simple paragraph demonstrating a basic HTML structure. You can replace this text with your own content. HTML is the standard markup language for creating web pages and web applications.</p>
+    
+    <img 
+        src="https://placehold.co/600x400/3498db/ffffff?text=My+Awesome+Image"
+        alt="A placeholder image"
+    >
+
+    <div id="startNode" class="card">
+        <h3>This is a Card</h3>
+        <p>This div has a border, padding, and a shadow applied using our new CSS class.</p>
+    </div>
+    
+    <hr>
+
+    <h2>Contact Us</h2>
+    
+    <form>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="customAlert" class="custom-alert-overlay">
+        <div class="custom-alert-box">
+            <h2>Hello!</h2>
+            <p>This is a custom greeting message.</p>
+            <button id="closeAlert">Close</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const alertOverlay = document.getElementById('customAlert');
+            const closeButton = document.getElementById('closeAlert');
+
+            if (alertOverlay) {
+                alertOverlay.style.display = 'flex';
+            }
+
+            if (closeButton) {
+                closeButton.onclick = function() {
+                    alertOverlay.style.display = 'none';
+                }
+            }
+            
+            console.log("--- DOM Traversal Examples ---");
+
+            const startNode = document.getElementById('startNode');
+            console.log("Starting Node:", startNode);
+
+            const parent = startNode.parentNode;
+            console.log("Parent Node (should be the <body>):", parent);
+
+            const children = startNode.childNodes;
+            console.log("Child Nodes (includes text nodes):", children);
+
+            const nextElement = startNode.nextElementSibling;
+            console.log("Next Element Sibling (should be the <hr>):", nextElement);
+        };
+    </script>
+        
+</body>
+</html>
